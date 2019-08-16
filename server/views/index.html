@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Task List</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  </head>
+  <body>
+    <h1>Driver Test</h1>
+    <div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <form id="driverForm">
+                <select class="form-control" id="bookingStatus">
+                    <option value="confirmed">Confirmed</option>
+                </select>
+                <br/>
+                <input type="button" name="submit" value="Confirm" Booking” class="btn btn-danger">
+            </form>
+        </div>
+        <div class="col-md-6"></div>
+    </div>
+ <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.slim.js" integrity="sha256-RtMTraB5gGlLER0FkKBcaXCmZCQCxkKS/dXm7MSEoEY=" crossorigin="anonymous"></script>
+  
+  <script>
+  var socket = io();
+  socket.on("connect",()=>{
+    console.log(socket.id);
+
+    var driverCurrentData = {
+      "socketId":socket.id,
+      "locationId":"5d15ef6f96a184762939ea4c"
+    };
+
+    $.ajax({
+      type:"PUT",
+      url:"http://localhost:3000/api/driverslocation/" + driverCurrentData.locationId,
+      dataType:"json",
+      data:driverCurrentData
+    }).done(function(response){
+      if(response !== ""){
+        console.log("success")
+      } else{
+        console.log("Error"+response)
+      }
+    });
+
+    var driverRequest = socket.id + "driverRequest";
+    socket.on(driverRequest, function(passengerData){
+        if(passengerData){
+            console.log("Passenger looking for a driver", passengerData);}
+    });
+  });
+  </script>
+  </body>
+</html>
