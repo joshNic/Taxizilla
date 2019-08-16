@@ -131,7 +131,7 @@ export function getSelectedAddress(payload) {
                 ',' +
                 store().home.selectedAddress.selectedDropOff.location.longitude,
               mode: 'driving',
-              key: 'AIzaSyATx6Lcfj-M1RUw5ig40_vCC7BSmVJ0HVM'
+              key: 'key'
             })
             .finish((error, res) => {
               dispatch({

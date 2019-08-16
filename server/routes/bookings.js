@@ -10,10 +10,10 @@ const bodyPaser = require('body-parser');
 
 app.use(bodyPaser.urlencoded({ extended: true }));
 app.use(bodyPaser.json());
-var db = mongoose.connect(
-  'mongodb+srv://Mugisha:5y+2X=90@cluster0-gmoxm.mongodb.net/taxiapp',
-  { useCreateIndex: true, useNewUrlParser: true }
-);
+var db = mongoose.connect('mongodbandress', {
+  useCreateIndex: true,
+  useNewUrlParser: true
+});
 
 router.get('/driverslocation', async function(req, res, next) {
   try {
